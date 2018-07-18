@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -19,4 +21,39 @@ class OrderInfo(models.Model):
         ('wechat', '微信'),
     )
 
-    user = models.ForeignKey(User,verbose_name="用户")
+    user = models.ForeignKey(User, verbose_name="用户")
+    # unique 订单号唯一
+    order_sn = models.CharField(max_length=30, unique=True, verbose_name='订单编号')
+    # 微信支付
+    nonce_str = models.CharField(max_length=50, unique=True, verbose_name='随机加密字符串')
+    # 支付宝支付
+    trado_no = models.CharField(max_length=100, unique=True, verbose_name='交易号')
+    pay_status = models.CharField(choices=ORDER_STATUS, default='paying', max_length=30, verbose_name='支付状态')
+    # 支付类型
+    pay_type = models.CharField(choices=PAY_TYPE, default='alipay', max_length=10, verbose_name='支付类型')
+    post_script = models.CharField(max_length=200, null=True, blank=True, verbose_name='订单备注')
+    order_mount = models.FloatField(default=0.0, verbose_name='订单金额')
+    pay_time = models.DateTimeField(auto_now_add=True, verbose_name='支付时间')
+
+    # 用户信息
+    address = models.CharField(max_length=100, default="", verbose_name="收货地址")
+    signer_name = models.CharField(max_length=20, default="", verbose_name='签收人')
+    signer_mobile = models.CharField(max_length=12, verbose_name='联系方式')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name='添加时间')
+
+    class Meta:
+        ordering = ['pay_time']
+        verbose_name = '订单详情'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.order_sn)
+
+
+class OrderGoods(models.Model):
+    """
+    订单内商品信息
+    """
+
+    # 一个订单对应多个商品
+    order = models.ForeignKey(OrderInfo, verbose_name='订单信息', related_name='goods')
