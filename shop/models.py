@@ -36,7 +36,7 @@ class GoodsCategory(models.Model):
     # 设置目录树的级别
     category_type = models.IntegerField(choices=CATEGORY_TYPE, verbose_name="类目级别", help_text="类目级别")
 
-    add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+    add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
 
     class Meta:
         verbose_name = "商品类别"
@@ -64,7 +64,7 @@ class Goods(models.Model):
     is_new = models.BooleanField(default=False, verbose_name="是否新品")
     # 商品详情页的热卖商品，自行设置
     is_hot = models.BooleanField(default=False, verbose_name="是否热销")
-    add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+    add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
     category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="商品类目")
 
     class Meta:
@@ -98,7 +98,7 @@ class HotSearchWords(models.Model):
     """
     keywords = models.CharField(default="", max_length=20, verbose_name="热搜词")
     index = models.IntegerField(default=0, verbose_name="排序")
-    add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
+    add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
 
     class Meta:
         verbose_name = '热搜排行'
