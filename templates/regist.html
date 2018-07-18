@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Regist</title>
+</head>
+<body>
+
+{% if Method == 'GET' %}
+    <form method ="post">
+        {% csrf_token %}
+        {{ userform.as_p }}
+        <input type="submit" name="regist" value="regist">
+    </form>
+{% elif Method == "POST" %}
+    {% if name %}
+        {{ name }} regist is success!
+        <br>
+        <a href="{% url 'login' %}">login</a>
+    {% else %}
+        {{ registJudge }}  is exist!
+        <br>
+        <a href="{% url 'register' %}">regist</a>
+    {% endif %}
+{% endif %}
+</body>
+</html>

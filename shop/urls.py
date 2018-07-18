@@ -18,10 +18,12 @@ from django.urls import path
 
 from shop import views
 
-urlpatterns = {
-    # http://localhost:8000/login/
+urlpatterns = [
+    # http://localhost:8000/shop/regist/
+    path('regist/', views.regist, name="register"),
+    # http://localhost:8000/shop/login/
     path('login/', views.login, name="login"),
-    # http://localhost:8000/logout/
-    path('logout/', views.logout, name="logout")
+    # http://localhost:8000/shop/logout/
+    path('logout/', views.logout, name="logout"),
 
-}
+]

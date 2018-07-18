@@ -3,6 +3,7 @@ Thumbs.db
 ehthumbs.db
 venv
 .idea
+*.pyc
 
 # Folder config file
 Desktop.ini
