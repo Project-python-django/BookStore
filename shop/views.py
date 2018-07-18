@@ -1,7 +1,11 @@
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
 # 主页
+
+
+
 def home(request):
     pass
 
@@ -13,3 +17,7 @@ def login(request):
 # todo 登出
 def logout(request):
     pass
+
+
+def home(request):
+    return JsonResponse({"msg": "ok"})
