@@ -1,17 +1,4 @@
-<<<<<<< HEAD
 
-from django.urls import path
-
-from shop import views
-
-urlpatterns = {
-
-    path('address/',views.address),
-    path('cart/',views.cart)
-
-
-}
-=======
 from django.urls import path, include
 
 from shop import views
@@ -24,4 +11,4 @@ urlpatterns = [
     # 图形验证码
     path('captcha', include('captcha.urls')),
 ]
->>>>>>> bai
+

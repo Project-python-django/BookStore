@@ -76,8 +76,8 @@ WSGI_APPLICATION = 'BookStore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'taobao',
-        "HOST": '10.35.163.81',
+        'NAME': 'TAOBAO',
+        "HOST": '10.35.163.39',
         "PORT": '3306',
         'USER': 'root',
         'PASSWORD': 'root',

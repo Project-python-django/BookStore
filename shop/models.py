@@ -34,14 +34,14 @@ class ConfirmString(models.Model):
 class Goods(models.Model):
 
     goods_id = models.CharField(max_length=50, default="", verbose_name="商品唯一货号")
-    name = models.CharField(max_length=100, verbose_name="商品名")
-    sold_num = models.IntegerField(default=0, verbose_name="商品销售量")
-    goods_num = models.IntegerField(default=0, verbose_name="库存数")
+    img_url = models.CharField(max_length=100, verbose_name="图片路径")
     market_price = models.FloatField(default=0, verbose_name="市场价格")
-    imgPath = models.CharField(max_length=100, default='',verbose_name="图片链接")
-
+    goods_num = models.CharField(default=0, verbose_name="库存数量")
+    name= models.CharField(default=0, verbose_name="商品名程")
+    address = models.CharField(default=0, verbose_name="商品产地")
 
     class Meta:
+        db_table='taobao'
         verbose_name = "用户"
         verbose_name_plural = verbose_name
 
@@ -49,12 +49,9 @@ class Goods(models.Model):
 
 class Cart(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-
     goods = models.ForeignKey(Goods,on_delete=models.CASCADE)
-
     # 数量
     cnt = models.IntegerField(default=1)
-
     # 是否被选择
     isSelected = models.BooleanField(default=True)
 
