@@ -131,9 +131,9 @@ EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'baifan1111@qq.com'
-EMAIL_HOST_PASSWORD = 'cugbaifan026112'
-DEFAULT_FROM_EMAIL = "小宝贝"
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+DEFAULT_FROM_EMAIL = ""
 
 CONFIRM_DAYS = 7
 
