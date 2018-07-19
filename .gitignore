@@ -1,8 +1,8 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+static
 venv
+*.pyc
 .idea
+<<<<<<< HEAD
 *.pyc
 
 # Folder config file
@@ -50,3 +50,11 @@ Temporary Items
 /VueDjangoFrameWorkShop/local_settings.py
 /VueDjangoFrameWorkShop/dev_settings.py
 /trade/keys
+=======
+__pycache__
+*.css
+*.svg
+*.woff
+*.woff2
+*.js*.eot
+>>>>>>> bai
