@@ -5,8 +5,8 @@ from shop import views
 
 urlpatterns = {
 
-    path('login/', views.login, name="login"),
-    path('logout/', views.logout, name="logout"),
-    path('home/',views.home),
+    path('address/',views.address),
+    path('cart/',views.cart)
+
 
 }

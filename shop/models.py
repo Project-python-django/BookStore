@@ -1,23 +1,22 @@
 from django.db import models
 import datetime
 
+class User(models.Model):
 
-class UserProfile:
-    name = models.CharField(max_length=30, null=True, blank=True, unique=True, verbose_name='用户名')
-    pwd = models.CharField(max_length=255, null=False, verbose_name='密码')
-    phone = models.CharField(max_length=11, null=False, unique=True, verbose_name='电话号码')
-    cardNum = models.CharField(max_length=18, null=False, unique=True, verbose_name='身份证号')
-    birthday = models.DateTimeField(null=True, blank=True, verbose_name='出生年月')
-    alias = models.CharField(max_length=50, null=True, blank=True, verbose_name='昵称')
-    email = models.CharField(max_length=50, null=True, blank=True, verbose_name='邮箱')
-    gender = models.CharField(max_length=6, choices=(('male', '男'), ('female', '女'), ('secrecy', '保密')),
-                              default='secrecy', verbose_name='性别')
+    gender = (('male', '男'), ('female', '女'))
+    name = models.CharField(max_length=254, unique=True)
+    password = models.CharField(max_length=256)
+    email = models.EmailField(unique=True)
+    sex = models.CharField(max_length=32, choices=gender, default="male")
+    c_time = models.DateTimeField(auto_now_add=True)
 
+    # 使用__str__帮助人性化显示对象信息；
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "用户信息"
+        ordering = ["-c_time"]
+        verbose_name = "用户"
         verbose_name_plural = verbose_name
 
 
@@ -26,8 +25,10 @@ class UserProfile:
 class GoodsCategory(models.Model):
     #商品分类
     CATEGORY_TYPE = (
-        (1, "一级类目"),
-        (2, "二级类目"),
+        (1, "男装"),
+        (2, "女装"),
+        (3, "儿童"),
+        (4, "运动"),
 
     )
 
@@ -75,39 +76,69 @@ class Goods(models.Model):
         return self.name
 
 
+#
+# class HotSearchWords(models.Model):
+#     """
+#     搜索栏下方热搜词
+#     """
+#     keywords = models.CharField(default="", max_length=20, verbose_name="热搜词")
+#     index = models.IntegerField(default=0, verbose_name="排序")
+#     add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
+#
+#     class Meta:
+#         verbose_name = '热搜排行'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.keywords
+
+class Cart(models.Model):
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
+
+    goods = models.ForeignKey(Goods,
+                             on_delete=models.CASCADE)
+
+    # 数量
+    cnt = models.IntegerField(default=1)
+
+    # 是否被选择
+    isSelected = models.BooleanField(default=True)
 
 
-class IndexAd(models.Model):
-    """
-    首页类别标签右边展示的七个商品广告
-    """
-    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, related_name='category',verbose_name="商品类目")
-    goods =models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='goods')
 
-    class Meta:
-        verbose_name = '首页广告'
-        verbose_name_plural = verbose_name
+class ShAddress(models.Model):
+    # 收件地址模型类
+    userName = models.CharField(max_length=20,
+                            verbose_name='收件人')
+    tel = models.CharField(max_length=12, verbose_name='收件人电话')
+    streetName = models.TextField(default='',
+                                      verbose_name='收货地址')
 
-    def __str__(self):
-        return self.goods.name
+    user = models.ForeignKey(User,
+                             on_delete=models.CASCADE)
 
 
-class HotSearchWords(models.Model):
-    """
-    搜索栏下方热搜词
-    """
-    keywords = models.CharField(default="", max_length=20, verbose_name="热搜词")
-    index = models.IntegerField(default=0, verbose_name="排序")
-    add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
 
-    class Meta:
-        verbose_name = '热搜排行'
-        verbose_name_plural = verbose_name
+# class Order(models.Model):  # 订单
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#
+#     # 订单的收货地址
+#     orderAdress = models.ForeignKey(ShAddress,
+#                                     on_delete=models.SET_NULL,
+#                                     null=True)
+#     # 订单的单号
+#     orderNum = models.CharField(primary_key=True,
+#                                 max_length=50, verbose_name='订单号')
+#
+#     # 生成订单时间
+#     orderTime = models.DateTimeField(auto_now_add=True)
+#
+#
+#
+# class OrderGoods(models.Model):  # 订单明细
+#     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+#     goods = models.ForeignKey(Goods, on_delete=models.SET_NULL, null=True)
+#     cnt = models.IntegerField(default=1)
+#     price = models.DecimalField(default=0, max_digits=10, decimal_places=2, verbose_name='小计')
 
-    def __str__(self):
-        return self.keywords
-
-
-class UserPrfile(models.Model):
-
-    pass

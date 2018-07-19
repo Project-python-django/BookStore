@@ -22,7 +22,7 @@ jdcal
 Jinja2
 Markdown
 MarkupSafe
-mysqlclient
+
 odfpy
 openpyxl
 Pillow
