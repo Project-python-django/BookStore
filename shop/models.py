@@ -17,6 +17,19 @@ class User(models.Model):
     def __str__(self):
         return self.name
 
+class ConfirmString(models.Model):
+    code = models.CharField(max_length=256)
+    user = models.OneToOneField("User", on_delete=models.CASCADE)
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.name+":  "+self.code
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "验证码"
+        verbose_name_plural = verbose_name
+
 
 class Goods(models.Model):
 
@@ -54,15 +67,3 @@ class ShAddress(models.Model):
     streetName = models.TextField(default='',verbose_name='收货地址')
     user = models.ForeignKey(User,on_delete=models.CASCADE)
 
-class ConfirmString(models.Model):
-    code = models.CharField(max_length=256)
-    user = models.OneToOneField("User", on_delete=models.CASCADE)
-    c_time = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.user.name+":  "+self.code
-
-    class Meta:
-        ordering = ["-c_time"]
-        verbose_name = "验证码"
-        verbose_name_plural = verbose_name
