@@ -1,23 +1,7 @@
 from django.db import models
 import datetime
 
-class User(models.Model):
 
-    gender = (('male', '男'), ('female', '女'))
-    name = models.CharField(max_length=254, unique=True)
-    password = models.CharField(max_length=256)
-    email = models.EmailField(unique=True)
-    sex = models.CharField(max_length=32, choices=gender, default="male")
-    c_time = models.DateTimeField(auto_now_add=True)
-
-    # 使用__str__帮助人性化显示对象信息；
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ["-c_time"]
-        verbose_name = "用户"
-        verbose_name_plural = verbose_name
 
 
 
@@ -49,23 +33,13 @@ class GoodsCategory(models.Model):
 
 class Goods(models.Model):
 
-
     goods_sn = models.CharField(max_length=50, default="", verbose_name="商品唯一货号")
     name = models.CharField(max_length=100, verbose_name="商品名")
-    click_num = models.IntegerField(default=0, verbose_name="点击数")
     sold_num = models.IntegerField(default=0, verbose_name="商品销售量")
-    fav_num = models.IntegerField(default=0, verbose_name="收藏数")
     goods_num = models.IntegerField(default=0, verbose_name="库存数")
     market_price = models.FloatField(default=0, verbose_name="市场价格")
+    imgPath = models.CharField(max_length=100, default='',verbose_name="图片链接")
 
-    member_price = models.FloatField(default=0, verbose_name="会员价格")
-    goods_brief = models.TextField(max_length=500, verbose_name="商品简短描述")
-
-    # 首页中新品展示
-    is_new = models.BooleanField(default=False, verbose_name="是否新品")
-    # 商品详情页的热卖商品，自行设置
-    is_hot = models.BooleanField(default=False, verbose_name="是否热销")
-    add_time = models.DateTimeField(auto_now=True, verbose_name="添加时间")
     category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, verbose_name="商品类目")
 
     class Meta:
