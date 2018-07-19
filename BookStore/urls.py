@@ -1,4 +1,4 @@
-"""BookStore URL Configuration
+"""shop URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
@@ -18,7 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path ,include
 
+from shop import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('shop/', include("shop.urls"))
+=======
+    path('', include("shop.urls")),
+    path('confirm/', views.user_confirm),
+>>>>>>> bai
 ]
