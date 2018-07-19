@@ -20,10 +20,6 @@ from shop import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('shop/', include('shop.urls'), name='home')
-=======
     path('', include("shop.urls")),
     path('confirm/', views.user_confirm),
->>>>>>> bai
 ]
