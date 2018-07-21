@@ -1,10 +1,12 @@
-
 import datetime
 import hashlib
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import F
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from BookStore import settings
-from shop.models import ShAddress
+from shop.models import ShAddress, Goods, Cart, User
 from . import models
 from . import forms
 
@@ -15,15 +17,7 @@ from . import forms
 # 主页
 def index(request):
     pass
-    return render(request, 'shop/index.html')
-
-
-# 密码加密
-def hash_code(s, salt='shop'):
-    h = hashlib.sha256()
-    s += salt
-    h.update(s.encode())
-    return h.hexdigest()
+    return render(request, 'shop/home.html')
 
 
 # 登录
@@ -35,35 +29,41 @@ def login(request):
         login_form = forms.UserForm(request.POST)
         message = '请检查填写的内容'
         if login_form.is_valid():
-            # name = request.POST.get('name', None)
-            # password = request.POST.get('password', None)
             name = login_form.cleaned_data['name']
             password = login_form.cleaned_data['password']
             # todo 用户名合法性验证
             # todo 密码长度验证
             try:
                 user = models.User.objects.get(name=name)
-                if not user.has_confonfirmed:
-                    message = "请通过邮件确认登录"
-                    return render(request, 'shop/login.html', locals())
-
-                if len(password) < 8:
-                    message = '密码长度过短，不安全'
-                elif len(password) >= 8 and user.password == hash_code(password):
-                    # 向session中写入用户状态和数据
-                    request.session['is_login'] = True
-                    request.session['user_id'] = user.id
-                    request.session['name'] = user.name
-                    return redirect('/index/')
-                else:
-                    message = "密码错误"
             except:
-                message = "用户名不存在"
-        # locals()函数，返回当前所有本地变量字典。
-        return render(request, "shop/login.html", locals())
+                message = "用户不存在"
+                return render(request, 'shop/login.html', locals())
+            if not user.has_confonfirmed:
+                message = "请通过邮件确认登录"
+                return render(request, 'shop/login.html', locals())
 
-    login_form = forms.UserForm()
-    return render(request, 'shop/login.html', locals())
+            if user.password == hash_code(password):
+                # 向session中写入用户状态和数据
+                request.session['is_login'] = True
+                request.session['user_id'] = user.id
+                request.session['name'] = user.name
+                return redirect('/index/')
+            else:
+                message = "密码错误"
+                return render(request, 'shop/login.html', locals())
+        else:
+            return render(request, 'shop/login.html', locals())
+    # locals()函数，返回当前所有本地变量字典。
+    login_form = forms.UserForm
+    return render(request, "shop/login.html", locals())
+
+
+# 密码加密
+def hash_code(s, salt='shop'):
+    h = hashlib.sha256()
+    s += salt
+    h.update(s.encode())
+    return h.hexdigest()
 
 
 # 生成验证码
@@ -78,9 +78,9 @@ def make_confirm_string(user):
 def send_email(email, code):
     from django.core.mail import EmailMultiAlternatives
 
-    subject = '温州皮革厂倒闭了'
+    subject = '魏明明~~~'
 
-    text_content = '''感谢注册！'''
+    text_content = '''非常感谢注册！'''
 
     html_content = '''
                     <p>感谢注册<a href="http://{}/confirm/?code={}" target=blank>www.taobao.com</a>，\
@@ -173,32 +173,150 @@ def logout(request):
     request.session.flush()
     return redirect("/index/")
 
-
-
+##############################################################
 
 def cart(req):
-    user_id = req.session.get('is_login')
-    if not is_login:
-        return render(req, 'login.html')
+    user_id = req.session.get('user_id')
+    # if not user_id:
+    #     return render(req, 'shop/login.html')
 
     # 查询当前用户的默认收货信息
-    deliveryAddress =ShAddress.objects.filter(user_id=is_login).first()
+    # deliveryAddress =ShAddress.objects.filter(user_id=user_id).first()
+    #
+    # #查看当前用户下的购物车中的商品信息
+    # items = Cart.objects.filter(user_id=user_id)
 
-    #查看当前用户下的购物车中的商品信息
-    carts = Cart.objects.filter(user_id=is_login)
-    totalPrice = 0  # 计算总价格
-    for cart in carts:
-        if cart.isSelected:
-            totalPrice += cart.goods.price * cart.cnt
+    # totalPrice = 0  # 计算总价格
+    # for item in items:
+    #     if cart.isSelected:
+    #         totalPrice += cart.goods.price * cart.cnt
+    #
+    # return render(req,
+    #               'cart.html',
+    #               {
+    #                'items': items,
+    #                'totalPrice': totalPrice})
+    name=1
+    price=10
+    num=2
+    sum=20
+    totalPrice=30
 
-    return render(req,
-                  'cart.html',
-                  {'myAddress': deliveryAddress,
-                   'carts': carts,
-                   'totalPrice': totalPrice})
+    return render(req,'cart.html',{'name':1,'price':10,'num':2,'sum':20,'totalPrice':30})
 
 
 
 def address(request):
-    item=ShAddress.objects.all()
-    return render(request,'address.html',{'item':item})
+
+    dz=ShAddress.objects.first()
+    return render(request,'address.html',{'dz':dz})
+
+
+def home(request):
+    return render(request,'home.html')
+
+
+def man(request):
+    # man_list=Goods.objects.filter(cate='男装')
+    man_list = Goods.objects.all()
+    paginator = Paginator(man_list, 25)
+
+    page = request.GET.get('page')
+    try:
+        mgoods = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果请求的页数不是整数，返回第一页。
+        mgoods = paginator.page(1)
+    except EmptyPage:
+        # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+        mgoods = paginator.page(paginator.num_pages)
+    return render(request, 'man.html', {'mgoods': mgoods})
+
+def woman(request):
+    # woman_list=Goods.objects.filter(cate='女')
+    woman_list = Goods.objects.all()
+    paginator = Paginator(woman_list, 25)
+
+    page = request.GET.get('page')
+    try:
+        wgoods = paginator.page(page)
+    except PageNotAnInteger:
+        # 如果请求的页数不是整数，返回第一页。
+        wgoods = paginator.page(1)
+    except EmptyPage:
+        # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
+        wgoods = paginator.page(paginator.num_pages)
+    return render(request, 'man.html', {'wgoods': wgoods})
+
+
+def selectCart(req, cart_id):
+    # 0 全选， 99999 取消全选
+    if cart_id == 0 or cart_id == 99999:
+        # 全部更新
+        carts = Cart.objects.filter(user_id=req.session.get('user_id'))
+        carts.update(isSelected=True if cart_id == 0 else False)
+        totalPrice = 0  # 统计全选时的总价格
+        if cart_id == 0:
+            for cart in carts:
+                totalPrice += cart.cnt * cart.goods.price
+        return JsonResponse({'price': totalPrice,
+                             'status': 200})
+
+    data = {'status': 200, 'price': 1000.5}
+    try:
+        cart = Cart.objects.get(id=cart_id)
+        cart.isSelected = not cart.isSelected
+        cart.save()
+        data['price'] = cart.cnt * cart.goods.price
+        data['selected'] = cart.isSelected  # 当前选择状态
+    except:
+        data['status'] = 300
+        data['price'] = 0
+
+    return JsonResponse(data)
+
+
+def addCart(req, cart_id):
+    # 添加指定cart_id的商品 cnt，如果cart_id不存在时，要新添加？
+    price = 0
+    qs = Cart.objects.filter(id=cart_id)
+    if qs.exists():
+        price = qs.first().goods.price
+        qs.update(cnt=F('cnt') + 1)
+
+    else:
+        # 如果在Cart中查找不到，则表示cart_id为goods_id
+        user_id = req.session.get('user_id');
+        qs = Cart.objects.filter(user_id=user_id, goods_id=cart_id)
+        if qs.exists():
+            qs.update(cnt=F('cnt') + 1)
+        else:
+            qs.create(user_id=user_id, goods_id=cart_id, cnt=1)
+
+        # 查看商品的单价
+        price = Goods.objects.filter(productid=cart_id).first().price
+
+    return JsonResponse({'status': 200,
+                         'price': price,
+                         'msg': '添加或更新购物车成功!'})
+
+
+def subCart(req, cart_id):
+    # 减去 指定cart_id的商品的cnt, 如果cnt为0时，要删除？
+    price = 0
+    data = {'status': 200, 'price': '10'}
+    qs = Cart.objects.filter(id=cart_id)
+    if qs.exists():
+        price = qs.first().goods.price
+        if qs.first().cnt > 0:
+            qs.update(cnt=F('cnt') - 1)
+            data['price'] = price
+        else:
+            data['price'] = '0'
+            data['status'] = 201  # 不能再减了
+    else:
+        data['price'] = '0'
+        data['status'] = 300  # 不存在
+
+    return JsonResponse(data)
+

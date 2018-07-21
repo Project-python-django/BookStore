@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul li {
+            list-style: none;
+
+        }
+
+        #kname {
+            width: 1000px;
+            float: left;
+            display: inline-block;
+        }
+        #iname{
+            width: 200px;
+            height: 450px;
+        }
+        img {
+            width: 200px;
+            height: 300px;
+
+
+        }
+
+    </style>
+</head>
+<body>
+<ul>
+    <div id="kname">
+        {% for good in mgoods %}
+            <ul>
+                <div id="iname">
+                    <li><img src='{{ good.image }}'></li>
+
+                    <li>简介：{{ good.title }}</li>
+                    <li>销量: {{ good.number }}</li>
+                    <li>价格：{{ good.price }} </li>
+                    　　　　　
+                    <button onclick="gw()">+</button>
+                    {#                <p><span class="send-free">包邮</span></p>#}
+                </div>
+            </ul>
+        {% endfor %}
+
+
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if mgoods.has_previous %}
+            <a href="?page={{ mgoods.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ mgoods.number }} of {{ mgoods.paginator.num_pages }}.
+        </span>
+
+        {% if mgoods.has_next %}
+            <a href="?page={{ mgoods.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>
+
+</div>
+</body>
+</html>
