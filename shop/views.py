@@ -6,7 +6,7 @@ from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from BookStore import settings
-from shop.models import ShAddress, Goods, Cart, User
+from shop.models import ShAddress, Goods, Cart, User, Contact
 from . import models
 from . import forms
 
@@ -16,7 +16,6 @@ from . import forms
 
 # 主页
 def index(request):
-    pass
     return render(request, 'shop/home.html')
 
 
@@ -24,7 +23,7 @@ def index(request):
 def login(request):
     # 禁止重复登录
     if request.session.get('is_login', None):
-        return redirect("/index/")
+        return redirect("/index")
     if request.method == "POST":
         login_form = forms.UserForm(request.POST)
         message = '请检查填写的内容'
@@ -168,60 +167,24 @@ def user_confirm(request):
 # 登出
 def logout(request):
     if not request.session.get('is_login', None):
-        return redirect('/index/')
+        return redirect('/index')
     # flush()清空session
     request.session.flush()
-    return redirect("/index/")
-
-##############################################################
-
-def cart(req):
-    user_id = req.session.get('user_id')
-    # if not user_id:
-    #     return render(req, 'shop/login.html')
-
-    # 查询当前用户的默认收货信息
-    # deliveryAddress =ShAddress.objects.filter(user_id=user_id).first()
-    #
-    # #查看当前用户下的购物车中的商品信息
-    # items = Cart.objects.filter(user_id=user_id)
-
-    # totalPrice = 0  # 计算总价格
-    # for item in items:
-    #     if cart.isSelected:
-    #         totalPrice += cart.goods.price * cart.cnt
-    #
-    # return render(req,
-    #               'cart.html',
-    #               {
-    #                'items': items,
-    #                'totalPrice': totalPrice})
-    name=1
-    price=10
-    num=2
-    sum=20
-    totalPrice=30
-
-    return render(req,'cart.html',{'name':1,'price':10,'num':2,'sum':20,'totalPrice':30})
+    return redirect("/index")
 
 
-
-def address(request):
-
-    dz=ShAddress.objects.first()
-    return render(request,'address.html',{'dz':dz})
-
-
+#############################################################
 def home(request):
-    return render(request,'home.html')
+    return render(request, 'home.html')
 
 
-def man(request):
-    # man_list=Goods.objects.filter(cate='男装')
-    man_list = Goods.objects.all()
+
+
+def man(req):
+    man_list = Goods.objects.filter(cate='男装')
     paginator = Paginator(man_list, 25)
 
-    page = request.GET.get('page')
+    page = req.GET.get('page')
     try:
         mgoods = paginator.page(page)
     except PageNotAnInteger:
@@ -230,14 +193,37 @@ def man(request):
     except EmptyPage:
         # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
         mgoods = paginator.page(paginator.num_pages)
-    return render(request, 'man.html', {'mgoods': mgoods})
+    return render(req, 'man.html', {'mgoods': mgoods})
 
-def woman(request):
-    # woman_list=Goods.objects.filter(cate='女')
-    woman_list = Goods.objects.all()
+
+
+def lx(req):
+    user_id = req.session.get('user_id')
+    if not user_id:
+        return redirect('/login')
+
+    contact = Contact()
+    contact.username = req.POST.get('name')
+    contact.email = req.POST.get('e_mail')
+    contact.title = req.POST.get('title')
+    contact.content = req.POST.get('message')
+
+    contact.save()
+
+    return render(req, 'lx.html')
+
+
+
+
+def order(req):
+    return render(req, 'order.html')
+
+
+def woman(req):
+    woman_list = Goods.objects.filter(cate='女装')
     paginator = Paginator(woman_list, 25)
 
-    page = request.GET.get('page')
+    page = req.GET.get('page')
     try:
         wgoods = paginator.page(page)
     except PageNotAnInteger:
@@ -246,8 +232,29 @@ def woman(request):
     except EmptyPage:
         # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
         wgoods = paginator.page(paginator.num_pages)
-    return render(request, 'man.html', {'wgoods': wgoods})
+    return render(req, 'woman.html', {'mgoods': wgoods})
 
+
+def gmxz(req):
+    return render(req,'gmxz.html')
+
+def cart(req):
+    user_id = req.session.get('user_id')
+    if not user_id:
+        return render(req, 'shop/login.html')
+
+
+
+    # 查看当前用户下的购物车中的商品信息
+    items = Cart.objects.filter(user_id=user_id)
+
+    totalPrice = 0  # 计算总价格
+    for item in items:
+        if cart.isSelected:
+            totalPrice += cart.goods.price * cart.cnt
+
+
+    return render(req, 'cart.html',{'items': items,'totalPrice': totalPrice})
 
 def selectCart(req, cart_id):
     # 0 全选， 99999 取消全选
@@ -319,4 +326,3 @@ def subCart(req, cart_id):
         data['status'] = 300  # 不存在
 
     return JsonResponse(data)
-

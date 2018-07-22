@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'TAOBAO',
-        "HOST": '10.35.163.39',
+        "HOST": '192.168.0.108',
         "PORT": '3306',
         'USER': 'root',
         'PASSWORD': 'root',
@@ -140,49 +140,49 @@ DEFAULT_FROM_EMAIL = "小宝贝"
 
 CONFIRM_DAYS = 7
 
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    #日志格式对象
-    'formatters': {
-        'info': {
-            'format': '[%(levelname)s][%(asctime)s][%(filename)s][%(funcName)s][%(lineno)d] > %(message)s',
-            'datefmt':'%Y-%m-%d %H:%M:%S',
-        },
-        'simple': {
-            'format': '[%(levelname)s]> %(message)s'
-        },
-    },
-    #过滤器
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    #处理器
-    'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'info'
-        },
-        'logFile':{
-            'level': 'INFO',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'formatter': 'info',
-            'filename':'a.log'
-        },
-    },
-    #日志对象，处理器Handler
-    'loggers': {
-        'mdjango': {
-            # 'handlers': ['console', 'file_handler'],
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    },}
+#
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': True,
+#     #日志格式对象
+#     'formatters': {
+#         'info': {
+#             'format': '[%(levelname)s][%(asctime)s][%(filename)s][%(funcName)s][%(lineno)d] > %(message)s',
+#             'datefmt':'%Y-%m-%d %H:%M:%S',
+#         },
+#         'simple': {
+#             'format': '[%(levelname)s]> %(message)s'
+#         },
+#     },
+#     #过滤器
+#     'filters': {
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     #处理器
+#     'handlers': {
+#         'console': {
+#             'level': 'INFO',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'info'
+#         },
+#         'logFile':{
+#             'level': 'INFO',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'formatter': 'info',
+#             'filename':'a.log'
+#         },
+#     },
+#     #日志对象，处理器Handler
+#     'loggers': {
+#         'mdjango': {
+#             # 'handlers': ['console', 'file_handler'],
+#             'handlers': ['console'],
+#             'level': 'INFO',
+#             'propagate': False,
+#         },
+#     },}
 
 
 

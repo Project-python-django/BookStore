@@ -1,54 +1,468 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        ul li {
-            list-style: none;
-
-        }
-
-        #iname {
-            width: 200px;
-            height: 300px;
-            display: inline-block;
-        }
-
-    </style>
+<!doctype html>
+<head profile="http://www.w3.org/1999/xhtml/vocab">
+    <meta charset="utf-8"/>
+    <link rel="shortcut icon" href="http://www.xiaopangniu.net/favicon.ico" type="image/vnd.microsoft.icon"/>
+    <meta name="Generator" content="Drupal 7 (http://drupal.org)"/>
+    <title>精品男装</title>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/1.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/2.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/3.css" media="screen"/>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/4.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/5.css" media="all"/>
+    <link type="text/css" rel="stylesheet" href="/static/ns/css/6.css" media="all"/>
+    <script type="text/javascript" src="/static/ns/js/1.js"></script>
+    <script type="text/javascript" src="/static/ns/js/2.js"></script>
+    <script type="text/javascript" src="/static/ns/js/3.js"></script>
+    <script type="text/javascript">
+        <!--//-->
+        <![CDATA[//><!--
+        jQuery.extend(Drupal.settings, {
+            "basePath": "\/",
+            "pathPrefix": "",
+            "ajaxPageState": {
+                "theme": "cooker",
+                "theme_token": "lOAbOFrc8VIhDa3jAQ1NI7LVAXNfZq4LAfWzlME1hPM",
+                "js": {
+                    "misc\/jquery.js": 1,
+                    "misc\/jquery.once.js": 1,
+                    "misc\/drupal.js": 1,
+                    "sites\/all\/libraries\/flexslider\/jquery.flexslider-min.js": 1,
+                    "misc\/jquery.cookie.js": 1,
+                    "misc\/jquery.form.js": 1,
+                    "misc\/ajax.js": 1,
+                    "sites\/all\/libraries\/colorbox\/colorbox\/jquery.colorbox-min.js": 1,
+                    "sites\/all\/modules\/colorbox\/js\/colorbox.js": 1,
+                    "sites\/all\/modules\/colorbox\/styles\/default\/colorbox_default_style.js": 1,
+                    "sites\/all\/modules\/colorbox\/js\/colorbox_load.js": 1,
+                    "sites\/all\/modules\/colorbox\/js\/colorbox_inline.js": 1,
+                    "sites\/all\/modules\/panels\/js\/panels.js": 1,
+                    "sites\/all\/modules\/flexslider\/assets\/js\/flexslider.load.js": 1,
+                    "misc\/progress.js": 1,
+                    "sites\/all\/modules\/fivestar\/js\/fivestar.ajax.js": 1,
+                    "sites\/all\/modules\/fivestar\/js\/fivestar.js": 1,
+                    "sites\/all\/themes\/cooker\/js\/libs\/modernizr-1.7.min.js": 1,
+                    "sites\/all\/themes\/cooker\/js\/libs\/jquery.easing.1.3.js": 1,
+                    "sites\/all\/themes\/cooker\/js\/libs\/jquery.jcarousel.min.js": 1,
+                    "sites\/all\/themes\/cooker\/js\/script.js": 1
+                },
+                "css": {
+                    "modules\/system\/system.base.css": 1,
+                    "modules\/system\/system.menus.css": 1,
+                    "modules\/system\/system.messages.css": 1,
+                    "modules\/system\/system.theme.css": 1,
+                    "sites\/all\/libraries\/flexslider\/flexslider.css": 1,
+                    "sites\/all\/modules\/flexslider\/assets\/css\/flexslider_img.css": 1,
+                    "sites\/all\/modules\/simplenews\/simplenews.css": 1,
+                    "modules\/comment\/comment.css": 1,
+                    "modules\/field\/theme\/field.css": 1,
+                    "modules\/node\/node.css": 1,
+                    "modules\/search\/search.css": 1,
+                    "sites\/all\/modules\/ubercart\/uc_order\/uc_order.css": 1,
+                    "sites\/all\/modules\/ubercart\/uc_product\/uc_product.css": 1,
+                    "sites\/all\/modules\/ubercart\/uc_store\/uc_store.css": 1,
+                    "modules\/user\/user.css": 1,
+                    "sites\/all\/modules\/views\/css\/views.css": 1,
+                    "sites\/all\/modules\/colorbox\/styles\/default\/colorbox_default_style.css": 1,
+                    "sites\/all\/modules\/ctools\/css\/ctools.css": 1,
+                    "sites\/all\/modules\/panels\/css\/panels.css": 1,
+                    "sites\/all\/modules\/ubercart\/uc_cart\/uc_cart_block.css": 1,
+                    "sites\/all\/modules\/fivestar\/css\/fivestar.css": 1,
+                    "sites\/all\/themes\/cooker\/css\/style.css": 1
+                }
+            },
+            "colorbox": {
+                "opacity": "0.85",
+                "current": "{current} of {total}",
+                "previous": "\u00ab Prev",
+                "next": "Next \u00bb",
+                "close": "Close",
+                "maxWidth": "100%",
+                "maxHeight": "100%",
+                "fixed": true,
+                "__drupal_alter_by_ref": ["default"]
+            },
+            "flexslider": {"optionsets": {"default": []}, "instances": {"flexslider-1": "default"}},
+            "ajax": {
+                "edit-vote--2": {
+                    "callback": "fivestar_ajax_submit",
+                    "event": "change",
+                    "url": "\/system\/ajax",
+                    "submit": {"_triggering_element_name": "vote"}
+                }
+            }
+        });
+        //--><!
+        ]]>
+    </script>
 </head>
-<body>
-<ul>
-    {% for good in wgoods %}
-        <ul>
-            <div id="iname">
-                <li><img src='{{ good.image }}'></li>
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-3 node-type-product uc-product-node">
+<div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+</div>
+<div id="wrapper">
+    <!-- LOGIN POP UPS -->
+    <div id="popup-overlay"></div>
+    <div class="wrapper">
+        <header>
+            <div class="top-nav">
+                {#                <nav>#}
+                {#                    <ul class="menu">#}
+                {#                        <li class="first leaf"><a href="/register" title="">注册</a></li>#}
+                {#                        <li class="leaf"><a href="/login" title="">登录</a></li>#}
+                {#                        <li class="leaf"><a href="/about" title="">今日优惠</a></li>#}
+                {#                        <li class="leaf"><a href="/blog" title="">全部菜单</a></li>#}
+                {#                        <li class="leaf"><a href="/contact" title="">订餐须知</a></li>#}
+                {#                        <li class="last leaf"><a href="/lx" title="">联系我们</a></li>#}
+                {#                    </ul>#}
+                {#                </nav>#}
+
+                <div class="search-form">
+                    <form action="/product/convallis-sit-amet-tellus" method="post" id="search-block-form"
+                          accept-charset="UTF-8">
+                        <div>
+                            <div class="container-inline">
+                                <h2 class="element-invisible">Search form</h2>
+                                <div class="form-item form-type-textfield form-item-search-block-form">
+                                    <label class="element-invisible" for="edit-search-block-form--2">Search </label>
+                                    <input title="Enter the terms you wish to search for." type="text"
+                                           id="edit-search-block-form--2" name="search_block_form" value="" size="15"
+                                           maxlength="128" class="form-text"/>
+                                </div>
+                                <div class="form-actions form-wrapper" id="edit-actions--2"><input type="submit"
+                                                                                                   id="edit-submit--2"
+                                                                                                   name="op"
+                                                                                                   value="Search"
+                                                                                                   class="form-submit"/>
+                                </div>
+                                <input type="hidden" name="form_build_id"
+                                       value="form--yb-UoootT96QrQeSVfKD3mMJ8JQuB4MONRX2GV5g90"/>
+                                <input type="hidden" name="form_id" value="search_block_form"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
-            <li>简介：{{ good.title }}</li>
-            <li>销量: {{ good.number }}</li>
-            <li>价格：{{ good.price }} </li>
-            　　　　　
-            <button onclick="gw()">+</button>
-            {#                <p><span class="send-free">包邮</span></p>#}
-        </ul>
-    {% endfor %}
-</ul>
-<div class="pagination">
-    <span class="step-links">
-        {% if wgoods.has_previous %}
-            <a href="?page={{ wgoods.previous_page_number }}">上一页</a>
+            <a class="logo" href="/" title="Home" rel="home" id="logo">
+                <img src="http://cooker.envato.tabvn.com/sites/all/themes/cooker/logo.png" alt="Home"/>
+            </a>
+
+            {#            <nav class="main-menu">#}
+            {#                <ul class="menu">#}
+            {#                    <li class="first leaf"><a href="/catelog/fruits-and-vegetables" title="">中餐</a></li>#}
+            {#                    <li class="leaf"><a href="/catelog/seafood" title="">西餐</a></li>#}
+            {#                    <li class="leaf"><a href="/catelog/meat" title="">点心</a></li>#}
+            {#                    <li class="leaf"><a href="/catelog/entrees" title="">饮品</a></li>#}
+            {#                    <li class="leaf"><a href="/catelog/pizza-and-pasta" title="">套餐</a></li>#}
+            {#                    <li class="last leaf"><a href="/catelog/desserts" title="">工作餐</a></li>#}
+            {#                </ul>#}
+            {#            </nav>#}
+        </header>
+        <div class="content clearfix">
+            <div class="breadcrumbs">
+                <h2 class="element-invisible">You are here</h2>
+                <div class="breadcrumb"><a href="/home">home</a> » content</div>
+            </div>
+            {% for good in mgoods %}
+                <div id="content" class="column left-content">
+                    <div class="section">
+                        <a id="main-content"></a>
+                        <h1 class="title" id="page-title">商品详情</h1>
+                        <div class="tabs"></div>
+                        <div class="region region-content">
+                            <div id="block-system-main" class="block block-system">
+
+
+                                <div class="content">
+                                    <div id="node-3" class="node node-product clearfix"
+                                         about="/product/convallis-sit-amet-tellus" typeof="sioc:Item foaf:Document">
+
+
+                                        <!-- node view full -->
+
+
+                                        <div class="meal-details single">
+
+
+                                            <div class="image">
+                                                <div class="field field-name-uc-product-image field-type-image field-label-hidden">
+                                                    <div class="field-items">
+                                                        <div class="field-item even">
+                                                            <div class="flex-nav-container">
+                                                                <div class="flexslider-content flexslider clearfix"
+                                                                     id="flexslider-1">
+                                                                    <ul class="slides">
+                                                                        <li><img typeof="foaf:Image"
+                                                                                 src="{{ good.image }}"
+                                                                                 width="800" height="500" alt=""/></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="date_categories">
+                                                <div class="created"></div>
+                                                <div class="field field-name-field-product-category field-type-taxonomy-term-reference field-label-inline clearfix">
+                                                    <div class="field-label"></div>
+                                                    <div class="field-items">
+                                                        <div class="field-item even">产地：{{ good.location }}：
+                                                            销量：{{ good.number }}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+
+                                            <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                                                <div class="field-items">
+                                                    <div class="field-item even" property="content:encoded"><p>
+                                                        {{ good.title }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr/>
+
+                                            <span class="price"><div
+                                                    class="product-info display-price uc-product-3"><span
+                                                    class="uc-price">${{ good.price }}</span></div></span>
+                                            <div class="add-to-cart">
+                                                <form action="/product/convallis-sit-amet-tellus" method="post"
+                                                      id="uc-product-add-to-cart-form-3" accept-charset="UTF-8">
+                                                    <div><input type="hidden" name="qty" value="1"/>
+                                                        <input type="hidden" name="form_build_id"
+                                                               value="form-yTDrwwpIdAWuzJIbME3wilay6UyYaqa3oE9JpeUsAvE"/>
+                                                        <input type="hidden" name="form_id"
+                                                               value="uc_product_add_to_cart_form_3"/>
+                                                        <div class="form-actions form-wrapper" id="edit-actions"><input
+                                                                class="node-add-to-cart form-submit" type="submit"
+                                                                id="edit-submit-3" name="op" value="加入购物车"/></div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="product-rating">
+                                                <div class="field field-name-field-rating field-type-fivestar field-label-hidden">
+                                                    <div class="field-items">
+                                                        <div class="field-item even">
+                                                            <form class="fivestar-widget"
+                                                                  action="/product/convallis-sit-amet-tellus"
+                                                                  method="post"
+                                                                  id="fivestar-custom-widget" accept-charset="UTF-8">
+
+                                                                <input class="fivestar-submit form-submit"
+                                                                       type="submit"
+                                                                       id="edit-fivestar-submit" name="op"
+                                                                       value="Rate"/><input type="hidden"
+                                                                                            name="form_build_id"
+                                                                                            value="form-INvmqL_3GtMg6hOEbpVE9-p2AYsSoZ0xXnAJkXvOrQo"/>
+                                                                <input type="hidden" name="form_id"
+                                                                       value="fivestar_custom_widget"/>
+
+                                                            </form>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr/>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- /.section, /#content -->
+
+            {% endfor %}
+            <div id="sidebar-second" class="column sidebar right-content">
+                <div class="section">
+                    <div class="region region-sidebar-second">
+                        <div id="block-block-3" class="block block-block">
+
+
+                            <div class="content">
+                                <div class="call-us">
+                                    <span class="label">Call us now!</span><span
+                                        class="pop phone">029/ 567 345</span><span
+                                        class="label">Working time:</span><span class="pop">0-24h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="block-custom-sidebar-featured-meals" class="block block-custom">
+
+                            <h2>每日推荐</h2>
+
+                            <div class="content">
+                                <div class="featured-meals">
+
+                                    <div class="prev-next-buttons">
+                                        <a href="#" class="prev"></a>
+                                        <a href="#" class="next"></a>
+                                    </div>
+
+                                    <div class="block meal">
+                                        <ul>
+                                            <li>
+                                                <div class="image">
+                                                    <img typeof="foaf:Image"
+                                                         src="https://g-search1.alicdn.com/img/bao/uploaded/i4/i3/2996173135/TB2IeyjrHSYBuNjSspiXXXNzpXa_!!2996173135-0-item_pic.jpg"
+                                                         width="207" height="158" alt=""/></div>
+                                                <h1>短袖t恤V领</h1>
+                                                <p>夏季男士短袖t恤V领半袖体恤韩版潮流修身体桖2018新款夏装衣服丅</p>
+                                                <span class="price">$59.00</span>
+                                                <div class="add-to-cart">
+                                                    <form action="/cart/checkout" method="post"
+                                                          id="uc-product-add-to-cart-form-4" accept-charset="UTF-8">
+                                                        <div><input type="hidden" name="qty" value="1"/>
+                                                            <input type="hidden" name="form_build_id"
+                                                                   value="form-hCfmVILmISUulQUMCZOcKyUPIS94qManU6SqkHGONuY"/>
+                                                            <input type="hidden" name="form_id"
+                                                                   value="uc_product_add_to_cart_form_4"/>
+                                                            <div class="form-actions form-wrapper"
+                                                                 id="edit-actions--3">
+                                                                <input class="node-add-to-cart form-submit"
+                                                                       type="submit" id="edit-submit-4" name="op"
+                                                                       value="Add to cart"/></div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="image">
+                                                    <img typeof="foaf:Image"
+                                                         src="https://g-search3.alicdn.com/img/bao/uploaded/i4/i4/517453675/TB2KlcMz29TBuNjy1zbXXXpepXa_!!517453675.jpg"
+                                                         width="207" height="158" alt=""/></div>
+                                                <h1>文艺原创棉麻女装</h1>
+                                                <p>麻霖文艺原创棉麻女装2018新款灯笼袖上衣苎麻宽松蝙蝠衫衬衫女夏</p>
+                                                <span class="price">$230.40</span>
+                                                <div class="add-to-cart">
+                                                    <form action="/cart/checkout" method="post"
+                                                          id="uc-product-add-to-cart-form-3" accept-charset="UTF-8">
+                                                        <div><input type="hidden" name="qty" value="1"/>
+                                                            <input type="hidden" name="form_build_id"
+                                                                   value="form-703oX-1XIlTMRO5-MpzFJqeXOjrw2xP0BtlsNSfsJmA"/>
+                                                            <input type="hidden" name="form_id"
+                                                                   value="uc_product_add_to_cart_form_3"/>
+                                                            <div class="form-actions form-wrapper"
+                                                                 id="edit-actions--4">
+                                                                <input class="node-add-to-cart form-submit"
+                                                                       type="submit" id="edit-submit-3" name="op"
+                                                                       value="Add to cart"/></div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pagination">
+
+        {% if mgoods.has_previous %}
+            <a href="?page={{ mgoods.previous_page_number }}">上一页</a>
         {% endif %}
+        Page {{ mgoods.number }} of {{ mgoods.paginator.num_pages }}.
+        {% if mgoods.has_next %}
+            <a href="?page={{ mgoods.next_page_number }}">下一页</a>
 
-        <span class="current">
-            Page {{ wgoods.number }} of {{ wgoods.paginator.num_pages }}.
-        </span>
-
-        {% if wgoods.has_next %}
-            <a href="?page={{ wgoods.next_page_number }}">下一页</a>
         {% endif %}
-    </span>
-</div>
+    </div>
+    <footer>
+        <div class="footer-holder">
+            <a href="/" class="logo">Footer Logo</a>
 
+            <div id="footer-columns" class="clearfix">
+                <div class="region region-footer-firstcolumn">
+                    <div id="block-simplenews-7" class="block block-simplenews">
+
+                        <h2>新装订阅</h2>
+
+                        <div class="content">
+
+                            <div class="newsletter">
+                                <div class="simplenews-block-content">
+                                    <p>只要留下你的邮箱地址，您就可以收到我们新装的订阅邮件！</p>
+                                    <form class="simplenews-subscribe" action="/" method="post"
+                                          id="simplenews-block-form-7" accept-charset="UTF-8">
+                                        <div>
+                                            <div class="form-item form-type-textfield form-item-mail">
+                                                <label for="edit-mail">E-mail <span class="form-required"
+                                                                                    title="This field is required.">*</span></label>
+                                                <input type="text" id="edit-mail" name="mail" value="" size="20"
+                                                       maxlength="128" class="form-text required"/>
+                                            </div>
+                                            <input type="submit" id="edit-submit" name="op" value="Subscribe"
+                                                   class="form-submit"/><input type="hidden" name="form_build_id"
+                                                                               value="form-p-JQE4lzDl3TVwV2AoBMhqhxR2lUEGaiwyh2ed7DxK8"/>
+                                            <input type="hidden" name="form_id" value="simplenews_block_form_7"/>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="region region-footer-thirdcolumn">
+                    <div id="block-block-1" class="block block-block">
+
+                        <h2>Useful Links</h2>
+
+                        <div class="content">
+                            <div class="item-list">
+                                <ul>
+                                    <li><a href="#">友情链接</a></li>
+                                    <li><a href="http://www.12306.cn/mormhweb/">12306</a></li>
+                                    <li><a href="http://www.ctrip.com/">携程</a></li>
+                                    <li><a href="https://www.kaola.com/?navindex=1&zn=top">海外购</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="region region-footer-fourthcolumn">
+                    <div id="block-block-2" class="block block-block">
+
+                        <h2>关注我们</h2>
+
+                        <div class="content">
+                            <div class="item-list">
+                                <ul class="social-links">
+                                    <li class="facebook"><a href="#">Facebook</a></li>
+                                    <li class="twitter"><a href="#">Twitter</a></li>
+                                    <li class="rss"><a href="#">Rss feed</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /#footer-columns -->
+
+        </div>
+    </footer>
 </div>
+<div id="store-footer"><a href="http://www.ubercart.org/">Drupal e-commerce</a> provided by Ubercart.</div>
 </body>
 </html>

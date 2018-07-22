@@ -3,7 +3,7 @@
     <meta charset="utf-8"/>
     <link rel="shortcut icon" href="http://cooker.envato.tabvn.com/misc/favicon.ico" type="image/vnd.microsoft.icon"/>
     <meta name="Generator" content="Drupal 7 (http://drupal.org)"/>
-    <title>购物车</title>
+    <title>订单信息</title>
     <link type="text/css" rel="stylesheet" href="/static/ns/css/1.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="/static/ns/css/2.css" media="all"/>
     <link type="text/css" rel="stylesheet" href="/static/ns/css/3.css" media="screen"/>
@@ -26,6 +26,10 @@
                     "misc\/jquery.js": 1,
                     "misc\/jquery.once.js": 1,
                     "misc\/drupal.js": 1,
+                    "misc\/jquery.cookie.js": 1,
+                    "misc\/jquery.form.js": 1,
+                    "misc\/form.js": 1,
+                    "misc\/ajax.js": 1,
                     "sites\/all\/libraries\/colorbox\/colorbox\/jquery.colorbox-min.js": 1,
                     "sites\/all\/modules\/colorbox\/js\/colorbox.js": 1,
                     "sites\/all\/modules\/colorbox\/styles\/default\/colorbox_default_style.js": 1,
@@ -33,6 +37,9 @@
                     "sites\/all\/modules\/colorbox\/js\/colorbox_inline.js": 1,
                     "sites\/all\/modules\/panels\/js\/panels.js": 1,
                     "misc\/tableheader.js": 1,
+                    "misc\/progress.js": 1,
+                    "misc\/textarea.js": 1,
+                    "sites\/all\/modules\/ubercart\/uc_cart\/uc_cart.js": 1,
                     "sites\/all\/themes\/cooker\/js\/libs\/modernizr-1.7.min.js": 1,
                     "sites\/all\/themes\/cooker\/js\/libs\/jquery.easing.1.3.js": 1,
                     "sites\/all\/themes\/cooker\/js\/libs\/jquery.jcarousel.min.js": 1,
@@ -58,6 +65,7 @@
                     "sites\/all\/modules\/ctools\/css\/ctools.css": 1,
                     "sites\/all\/modules\/panels\/css\/panels.css": 1,
                     "sites\/all\/modules\/ubercart\/uc_cart\/uc_cart_block.css": 1,
+                    "sites\/all\/modules\/ubercart\/payment\/uc_payment\/uc_payment.css": 1,
                     "sites\/all\/modules\/ubercart\/uc_cart\/uc_cart.css": 1,
                     "sites\/all\/themes\/cooker\/css\/style.css": 1
                 }
@@ -72,13 +80,47 @@
                 "maxHeight": "100%",
                 "fixed": true,
                 "__drupal_alter_by_ref": ["default"]
+            },
+            "ajax": {
+                "edit-panes-delivery-delivery-country": {
+                    "callback": "uc_store_update_address_field_zones",
+                    "wrapper": "uc-store-address-delivery-zone-wrapper",
+                    "progress": {"type": "throbber"},
+                    "event": "change",
+                    "url": "\/system\/ajax",
+                    "submit": {"_triggering_element_name": "panes[delivery][delivery_country]"}
+                },
+                "edit-panes-billing-copy-address": {
+                    "callback": "uc_checkout_pane_address_render",
+                    "wrapper": "billing-address-pane",
+                    "progress": {"type": "throbber"},
+                    "event": "change",
+                    "url": "\/system\/ajax",
+                    "submit": {"_triggering_element_name": "panes[billing][copy_address]"}
+                },
+                "edit-panes-billing-billing-country": {
+                    "callback": "uc_store_update_address_field_zones",
+                    "wrapper": "uc-store-address-billing-zone-wrapper",
+                    "progress": {"type": "throbber"},
+                    "event": "change",
+                    "url": "\/system\/ajax",
+                    "submit": {"_triggering_element_name": "panes[billing][billing_country]"}
+                },
+                "edit-panes-payment-payment-method-paypal-wps": {
+                    "callback": "uc_payment_checkout_payment_details",
+                    "wrapper": "payment-details",
+                    "progress": {"type": "throbber"},
+                    "event": "change",
+                    "url": "\/system\/ajax",
+                    "submit": {"_triggering_element_name": "panes[payment][payment_method]"}
+                }
             }
         });
         //--><!
         ]]>
     </script>
 </head>
-<body class="html not-front not-logged-in one-sidebar sidebar-second page-cart">
+<body class="html not-front not-logged-in one-sidebar sidebar-second page-cart page-cart-checkout">
 <div id="skip-link">
     <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
 </div>
@@ -100,7 +142,7 @@
                 </nav>
 
                 <div class="search-form">
-                    <form action="/cart" method="post" id="search-block-form" accept-charset="UTF-8">
+                    <form action="/cart/checkout" method="post" id="search-block-form" accept-charset="UTF-8">
                         <div>
                             <div class="container-inline">
                                 <h2 class="element-invisible">Search form</h2>
@@ -117,115 +159,173 @@
                                                                                                    class="form-submit"/>
                                 </div>
                                 <input type="hidden" name="form_build_id"
-                                       value="form-dU1naNoqK_g57G8a2HImK73_1Nk9h4_gENTasDO-IeI"/>
+                                       value="form-RFPc67_bdmNUePjDutwvDEuYebcA6rQqqhL2iHYhyeY"/>
                                 <input type="hidden" name="form_id" value="search_block_form"/>
                             </div>
                         </div>
                     </form>
-                </div>
+                </div>djcelery_intervalschedule
 
             </div>
-            <a class="logo" href="/home" title="Home" rel="home" id="logo">
+            <a class="logo" href="/" title="Home" rel="home" id="logo">
                 <img src="http://cooker.envato.tabvn.com/sites/all/themes/cooker/logo.png" alt="Home"/>
             </a>
         </header>
         <div class="content clearfix">
             <div class="breadcrumbs">
                 <h2 class="element-invisible">You are here</h2>
-                <div class="breadcrumb"><a href="/home">Home</a> » 购物车</div>
+                <div class="breadcrumb"><a href="/home">Home</a> » 收银台</div>
             </div>
-            {#            <div class="messages status">#}
-            {#                <h2 class="element-invisible">Status message</h2>#}
-            {#                <strong>convallis sit amet tellus</strong> added to <a href="/cart">your shopping cart</a>.#}
-            {#            </div>#}
             <div id="content" class="column left-content">
                 <div class="section">
                     <a id="main-content"></a>
-                    <h1 class="title" id="page-title">购物车</h1>
+                    <h1 class="title" id="page-title">结账</h1>
                     <div class="tabs"></div>
                     <div class="region region-content">
                         <div id="block-system-main" class="block block-system">
 
 
                             <div class="content">
-                                <div id="cart-form-pane">
-                                    <form action="/cart" method="post" id="uc-cart-view-form" accept-charset="UTF-8">
-                                        <div>
-                                            <div class="uc-default-submit"><input type="submit" id="edit-update"
-                                                                                  name="update-cart" value="Update cart"
-                                                                                  class="form-submit"/></div>
-                                            <table class="sticky-enabled">
-                                                <thead>
-                                                <tr>
-                                                    <th>移除</th>
-                                                    <th>商品简介</th>
-                                                    <th></th>
-                                                    <th><abbr title="Quantity">数量</abbr></th>
-                                                    <th>价格</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="odd">
-                                                    <td class="remove"><input type="submit" id="edit-items-0-remove"
-                                                                              name="remove-0" value="Remove"
-                                                                              class="form-submit"/></td>
-                                                    <td class="image"><a href="/product/convallis-sit-amet-tellus"><img
-                                                            typeof="foaf:Image"
-                                                            src="http://cooker.envato.tabvn.com/sites/default/files/styles/uc_cart/public/up.jpg"
-                                                            width="50" height="31" alt=""/></a></td>
-                                                    <td class="desc">convallis　sit amet tellus</td>
-                                                    <td class="qty">
-                                                        <div class="form-item form-type-uc-quantity form-item-items-0-qty">
-                                                            <label class="element-invisible" for="edit-items-0-qty">Quantity
-                                                                <span class="form-required"
-                                                                      title="This field is required.">*</span></label>
-                                                            <input type="text" id="edit-items-0-qty"
-                                                                   name="items[0][qty]" value="1" size="5" maxlength="6"
-                                                                   class="form-text required"/>
+                                <form class="uc-cart-checkout-form" action="/cart/checkout" method="post"
+                                      id="uc-cart-checkout-form" accept-charset="UTF-8">
+                                    <div>
+                                        <fieldset class="form-wrapper" id="cart-pane">
+                                            <legend><span class="fieldset-legend">购物车详情</span></legend>
+                                            <div class="fieldset-wrapper">
+                                                <table class="cart-review sticky-enabled">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="qty"><abbr title="Quantity">数量</abbr></th>
+                                                        <th class="products">产品描述</th>
+                                                        <th class="price">价格</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr class="odd">
+                                                        <td class="qty">1 ×</td>
+                                                        <td class="products"><a
+                                                                href="/product/convallis-sit-amet-tellus">convallis sit
+                                                            amet tellus</a></td>
+                                                        <td class="price"><span class="uc-price">$16.45</span></td>
+                                                    </tr>
+                                                    <tr class="subtotal even">
+                                                        <td colspan="3" class="subtotal"><span
+                                                                id="subtotal-title">总计:</span>
+                                                            <span class="uc-price">$16.45</span></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-wrapper" id="delivery-pane">
+                                            <legend><span class="fieldset-legend">收货信息</span></legend>
+                                            <div class="fieldset-wrapper">
+                                                <div class="fieldset-description">请输入您的配送地址及其他详细信息
+                                                </div>
+                                                <div id="delivery-address-pane">
+                                                    <div class="uc-store-address-field form-wrapper"
+                                                         id="edit-panes-delivery-address">
+                                                        <div class="form-item form-type-textfield form-item-panes-delivery-delivery-first-name">
+                                                            <label for="edit-panes-delivery-delivery-first-name"><span
+                                                                    class="form-required"
+                                                                    title="This field is required.">*</span> 收货姓名
+                                                            </label>
+                                                            <input type="text"
+                                                                   id="edit-panes-delivery-delivery-first-name"
+                                                                   name="panes[delivery][delivery_first_name]" value=""
+                                                                   size="32" maxlength="128" class="form-text"/>
                                                         </div>
-                                                    </td>
-                                                    <td class="price"><span class="uc-price">$16.45</span></td>
-                                                </tr>
-                                                <tr class="even">
-                                                    <td colspan="5" class="subtotal"><span
-                                                            id="subtotal-title">总价:</span> <span
-                                                            class="uc-price">$16.45</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="entity entity-uc-cart-item uc-cart-item-uc-cart-item clearfix"
-                                                 about="" typeof="">
 
-                                                <h2>
-                                                </h2>
+                                                        <div id="uc-store-address-delivery-zone-wrapper">
+                                                            <div class="form-item form-type-select form-item-panes-delivery-delivery-zone">
+                                                                <label for="edit-panes-delivery-delivery-zone"><span
+                                                                        class="form-required"
+                                                                        title="This field is required.">*</span>
+                                                                    选择市区 </label>
+                                                                <select id="edit-panes-delivery-delivery-zone"
+                                                                        name="panes[delivery][delivery_zone]"
+                                                                        class="form-select">
+                                                                    <option value="0" selected="selected">- 请选择 -
+                                                                    </option>
+                                                                    <option value="1">西安市</option>
+                                                                    <option value="2">宝鸡市</option>
+                                                                    <option value="3">咸阳市</option>
+                                                                    <option value="4">铜川市</option>
+                                                                    <option value="5">渭南市</option>
+                                                                    <option value="6">延安市</option>
+                                                                    <option value="7">榆林市</option>
+                                                                    <option value="8">汉中市</option>
+                                                                    <option value="9">安康市</option>
+                                                                    <option value="10">商洛市</option>
+                                                                    <option value="11">杨凌示范区</option>
 
-                                                <div class="content">
-                                                    <input type="hidden" name="items[0][data]"
-                                                           value="a:3:{s:9:&quot;shippable&quot;;s:1:&quot;1&quot;;s:4:&quot;type&quot;;s:7:&quot;product&quot;;s:6:&quot;module&quot;;s:10:&quot;uc_product&quot;;}"/>
-                                                    <input type="hidden" name="items[0][cart_item_id]" value="8"/>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-item form-type-textfield form-item-panes-delivery-delivery-postal-code">
+                                                            <label for="edit-panes-delivery-delivery-postal-code"><span
+                                                                    class="form-required"
+                                                                    title="This field is required.">*</span> 详细地址
+                                                            </label>
+                                                            <input type="text"
+                                                                   id="edit-panes-delivery-delivery-postal-code"
+                                                                   name="panes[delivery][delivery_postal_code]" value=""
+                                                                   size="10" maxlength="10" class="form-text"/>
+                                                        </div>
+                                                        <div class="form-item form-type-textfield form-item-panes-delivery-delivery-phone">
+                                                            <label for="edit-panes-delivery-delivery-phone">联系电话 </label>
+                                                            <input type="text" id="edit-panes-delivery-delivery-phone"
+                                                                   name="panes[delivery][delivery_phone]" value=""
+                                                                   size="16" maxlength="32" class="form-text"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="form_build_id"
-                                                   value="form-IiU9xgBbqEXC2KA2IOpM1bPJLjz-uiHNXPZKk5ZTV1s"/>
-                                            <input type="hidden" name="form_id" value="uc_cart_view_form"/>
-                                            <div class="form-actions form-wrapper" id="edit-actions"><a
-                                                    href="/product/convallis-sit-amet-tellus">继续购物</a>
-                                                <input type="submit" id="edit-update" name="update-cart" value="更新购物车"
-                                                       class="form-submit"/>
-                                                <input type="submit" id="edit-checkout--2" name="op" value="结算"
-                                                       class="form-submit"/>
+                                        </fieldset>
 
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                        <fieldset class="form-wrapper" id="payment-pane">
+                                            <legend><span class="fieldset-legend">订单金额</span></legend>
+                                            <div class="fieldset-wrapper">
+                                                <div id="line-items-div">
+                                                    <table id="uc-order-total-preview">
+                                                        <tr>
+                                                            <td class="title">总计:</td>
+                                                            <td class="price"><span class="uc-price">$16.45</span></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="form-item form-type-radios form-item-panes-payment-payment-method form-disabled">
+                                                    <label class="element-invisible"
+                                                           for="edit-panes-payment-payment-method">支付方式 <span
+                                                            class="form-required"
+                                                            title="This field is required.">*</span></label>
+
+                                                </div>
+                                                <div id="payment-details" class="clearfix payment-details-paypal_wps">
+                                                    继续付款完成付款
+                                                </div>
+
+
+                                        </fieldset>
+
+                                        <input type="hidden" name="form_build_id"
+                                               value="form-GOy5F22k0hzSH5ygXKEPAUyoiwVzzgFI0StxMiIKIA4"/>
+                                        <input type="hidden" name="form_id" value="uc_cart_checkout_form"/>
+                                        <div class="form-actions form-wrapper" id="edit-actions"><input type="submit"
+                                                                                                        id="edit-cancel"
+                                                                                                        name="op"
+                                                                                                        value="支付"
+                                                                                                        class="form-submit"/><input
+                                                type="submit" id="edit-continue" name="op" value="取消"
+                                                class="form-submit"/></div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!-- /.section, /#content -->
-
+            </div>
 
             <div id="sidebar-second" class="column sidebar right-content">
                 <div class="section">
@@ -314,6 +414,7 @@
                 </div>
             </div>
 
+
         </div>
     </div>
     <footer>
@@ -396,7 +497,6 @@
         </div>
     </footer>
 </div>
-<div id="store-footer">Powered by Ubercart, the <a href="http://www.ubercart.org/">free shopping cart software</a>.
-</div>
+<div id="store-footer"><a href="http://www.ubercart.org/">Powered by Ubercart</a></div>
 </body>
 </html>

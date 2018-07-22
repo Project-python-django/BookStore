@@ -36,7 +36,6 @@ class ConfirmString(models.Model):
 
 
 class Goods(models.Model):
-
     g_id = models.CharField(max_length=50, default="", verbose_name="商品唯一货号")
     cate = models.CharField(max_length=100, verbose_name='类型')
     image = models.CharField(max_length=200, verbose_name="图片路径")
@@ -60,9 +59,21 @@ class Cart(models.Model):
     isSelected = models.BooleanField(default=True)
 
 
+
 class ShAddress(models.Model):
     # 收件地址模型类
     userName = models.CharField(max_length=20, verbose_name='收件人')
     tel = models.CharField(max_length=12, verbose_name='收件人电话')
     streetName = models.TextField(default='', verbose_name='收货地址')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+# 顾客投诉与建议
+class Contact(models.Model):
+    usernsme = models.CharField(max_length=20, verbose_name='姓名')
+    email = models.CharField(max_length=30, verbose_name='邮箱')
+    title = models.CharField(max_length=30, verbose_name='主题')
+    content = models.CharField(max_length=250, verbose_name='内容')
+
+    class Meta:
+        verbose_name = "投诉建议"
+        verbose_name_plural = verbose_name

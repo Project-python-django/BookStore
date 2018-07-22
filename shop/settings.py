@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'TAOBAO',
-        "HOST": '10.35.163.39',
+        "HOST": '192.168.0.108',
         "PORT": '3306',
         'USER': 'root',
         'PASSWORD': 'root',
